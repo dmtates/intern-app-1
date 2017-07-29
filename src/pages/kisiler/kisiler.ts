@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams,LoadingController } from 'ionic-angular';
+import { MesajPage } from '../mesaj/mesaj';
 import firebase from 'firebase';
+
 /**
  * Generated class for the KisilerPage page.
  *
@@ -13,13 +15,14 @@ import firebase from 'firebase';
   templateUrl: 'kisiler.html',
 })
 export class KisilerPage {
-	kisiler:Array<{key: string, username: string}>;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl: LoadingController) {
-	  this.kisiler=[];
+	
+  kisiler:Array<{key: string, username: string}>;
  
+  constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl: LoadingController) {
+this.kisiler=[];
   this.presentLoadingDefault();
   }
-  
+
   getUsers(){
 	   firebase.database().ref('user').once('value').then( (kisi) =>{
 	  kisi.forEach( (child) => {

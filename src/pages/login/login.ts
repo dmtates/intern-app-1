@@ -20,12 +20,15 @@ import {ProfilPage} from '../profil/profil';
 export class LoginPage {
 email:any;
 password:any;
+userProfile: any = null;
   constructor(public navCtrl: NavController,private facebook: Facebook,private storage: Storage,public tst:ToastController,public loadingCtrl: LoadingController) {
-this.isLogin();
+this.checkUser();
   }
-  userProfile: any = null;
+  
   mesaj:any="asd";
   
+  
+  /*Uygulamaya facebook ile login yapılması */
   facebookLogin(){
        this.facebook.login(['email']).then( (response) => {
            const facebookCredential = firebase.auth.FacebookAuthProvider
@@ -46,6 +49,8 @@ this.isLogin();
 
        }).catch((error) => { console.log(error) });
 	 }
+	 
+	 /*Ekranda bilgi mesajlarının gösterilmesi için hazırlanan fonksiyon */
 	   presentToast(msj){
 let toast=this.tst.create({
   message:msj,
@@ -56,7 +61,9 @@ toast.present();
 
 
     }
+	/*Email şifre ile giriş yapılması */
 	   normalLogin(){
+if(this.email!=null&&this.password!==null){
 let loading = this.loadingCtrl.create({
     content: 'Giriş yapılıyor...'
   });
@@ -66,8 +73,10 @@ let loading = this.loadingCtrl.create({
         this.email,
 		this.password
       ).then((success)=>{
+		  console.log('Giriş yapılıyor');
 		   this.storage.set('user',success);
       this.navCtrl.push(HelloIonicPage);
+	  console.log('Giriş başarılı');
 	  }).catch((error)=>{
 		  this.presentToast(error);
 	  });
@@ -77,33 +86,56 @@ let loading = this.loadingCtrl.create({
   });
      
     }
-	   
-	isLogin(){
-	this.storage.get('user').then((val) => {
-this.navCtrl.push(HelloIonicPage);
-  }).catch((error)=>{});
+	 else{
+this.presentToast("Hiçbir alan boş geçilemez.Giriş bilgilerinizi kontrol ediniz!");
+	 }		
+	   }	
+	 /* Kisi kontrolü */
+checkUser(){
+		let loading = this.loadingCtrl.create({
+    content: 'Lütfen bekleyiniz...'
+  });
+		loading.present().then( () => {
+	   this.isLogin();
+	  
+	  loading.dismiss();
+	  
+  });
 	}
+/*Login kontrolünün yapılması */	   
+	isLogin(){
 	
+	this.storage.get('user').then((val) => {
+		 this.userProfile=val;
+		if(val.hasOwnProperty('uid') && val.uid !==null){
+			 
+			  this.navCtrl.setRoot(HelloIonicPage);
+		}
+		else
+		{
+		this.presentToast('sdfsf');
+		}
+	
+	 
+	
+  }).catch( (error) => {
+	  
+	  console.log('Giriş yapınız');
+  });
+  
+ 
+	
+	}
+/*Kayıt sayfasının açılması */
 	openRegisterPage(){
    this.navCtrl.push(RegisterPage);
 		
 	}
-    registerWithEmailAndPassword(){
-      firebase.auth().createUserWithEmailAndPassword(
-        'burakakyol0795@gmail.com',
-        "burak1234"
-      ).then((success)=>{
-      
-
-    }).catch((error)=>{
-
-      
-    });
+   
 
 
-    }
-
-
+	
+/*Sayfa açılmasının loglanması */
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }

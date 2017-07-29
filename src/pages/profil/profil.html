@@ -5,37 +5,37 @@
   Ionic pages and navigation.
 -->
 
+<ion-content class="login" *ngIf="userProfile" padding >
 
-<ion-content padding>
-<ion-list>
-    <ion-item *ngFor="let user of kisiler" >
-      <ion-avatar item-start>
-        <img src="vakifbank.logo.jpg">
-      </ion-avatar>
-<br>
-      <h2>{{user.username}}</h2>
-	  <h2>{{user.Email}}}}</h2>
-	   </ion-item>
-	   
-	   
-	
-</ion-list>
-</ion-content>
 
-<!--<ion-content class="login" *ngIf="userProfile; else elseblock;"  padding >
-<img class="logo" src="vakifbank.logo.jpg"/>
-background-color:#FDFEFE;
+
 
 <p padding>
-<img ion-thumbnail  [src]="userProfile.photoURL" >
+<ion-item>
 
+<img  style=" object-fit:cover;" [src]="userProfile.photoURL"/>
+
+
+
+</ion-item>
 </p>
-<h3>{{ userProfile.displayName }}</h3>
+<h3>{{userProfile.displayName}}</h3>
 
-<p>
-<button ion-button color="white"(click)='Logout()'>Logout</button>
-</p>
-
-
+<ion-list>
+<ion-item>
+  <ion-avatar >
+   <img  src="vakifbank.logo.jpg" class="avatar-profil" />
+  </ion-avatar>
+  <h2>{{userProfile.username}}</h2>
+ <h2>{{userProfile.email}}</h2>
+ <h2>{{userProfile.providerId}} </h2>
+ <button ion-button (click)="Logout()" >Çıkış </button>
+ </ion-item>
+ </ion-list>
 </ion-content>
--->
+
+
+
+
+
+

@@ -1,5 +1,5 @@
 import { Component,ViewChild,NgZone } from '@angular/core';
-import { NavController,ToastController,Platform,Content } from 'ionic-angular';
+import { NavController,ToastController,Platform,Content,LoadingController } from 'ionic-angular';
 import { Facebook } from '@ionic-native/facebook';
 import firebase from 'firebase';
 
@@ -20,18 +20,21 @@ export class HelloIonicPage {
   Profil = ProfilPage;
 
 @ViewChild(Content) content: Content;
-  constructor(public navCtrl: NavController,private facebook: Facebook,public tst:ToastController, public zone: NgZone,private storage:Storage)
+ userProfile: any = null;
+  constructor(private loadingCtrl:LoadingController,public navCtrl: NavController,private facebook: Facebook,public tst:ToastController, public zone: NgZone,private storage:Storage)
   {
-
+	  
+	  
+	  this.isLogin();
+	
 
   }
-  userProfile: any = null;
+ 
 getUserDetails(){
-this.storage.get('user').then((val) => {
-let username=val.displayName;
-this.userProfile=val;
-this.presentToast('Hoşgeldin  '+username);
-  }).catch((error)=>{this.presentToast('Lütfen giriş yapınız')});
+	console.log('Bilgiler alınıyor');
+this.storage.get('user').then( (val)=>{this.userProfile=val});
+console.log(this.userProfile);
+console.log('Bilgiler alındı');
 
 }
 
@@ -62,6 +65,33 @@ toast.present();
       this.presentToast('Çıkış Yapıldı.');
 	  
     }
+	
+
+		isLogin(){
+	
+	this.storage.get('user').then((val) => {
+		 this.userProfile=val;
+		if(val.hasOwnProperty('uid') && val.uid !==null){
+			this.presentToast('Hoşgeldiniz');
+		}
+		else
+		{
+		console.log('Giriş yapınız');
+		this.navCtrl.setRoot(LoginPage);
+		}
+	
+	 
+	
+  }).catch( (error) => {
+	  this.presentToast('Giriş Yapınız');
+		this.navCtrl.setRoot(LoginPage);
+  });
+  
+ 
+	
+	}
+	
+	
 
 
 

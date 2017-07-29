@@ -19,6 +19,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { KisilerPage } from '../pages/kisiler/kisiler';
 import { MesajlarPage } from '../pages/mesajlar/mesajlar';
 import { ProfilPage } from '../pages/profil/profil';
+import { MesajPage } from '../pages/mesaj/mesaj';
 const cloudSettings: CloudSettings = {
   'core': {
     'app_id': 'bb41db03'
@@ -48,7 +49,8 @@ const cloudSettings: CloudSettings = {
 	RegisterPage,
 	KisilerPage,
 	MesajlarPage,
-	ProfilPage
+	ProfilPage,
+	MesajPage
   ],
   imports: [
     BrowserModule,
@@ -67,7 +69,8 @@ const cloudSettings: CloudSettings = {
 	RegisterPage,
 	KisilerPage,
 	MesajlarPage,
-	ProfilPage
+	ProfilPage,
+	MesajPage
   ],
   providers: [
     StatusBar,

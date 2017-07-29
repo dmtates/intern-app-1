@@ -43,8 +43,9 @@ export class MyApp {
 
     this.initializeApp();
 
+	console.log(this.isLogin());
     // set our app's pages
-	if(this.isLogin()===false){
+	if(true==true){
 		
     this.pages = [
       { title: 'Hello Ionic', component: HelloIonicPage },

@@ -19,7 +19,7 @@ export class ProfilPage {
 userProfile:any=null;
   constructor(private zone: NgZone,public navCtrl: NavController, public navParams: NavParams,private storage:Storage,public tst:ToastController)
   {
-	 // this.getUserDetails();
+	 this.getUserDetails();
   }
   
   ionViewDidLoad() {
@@ -40,20 +40,19 @@ toast.present();
 	    Logout()
     {
       this.storage.remove('user');
-   this.zone.run(() => {
- 
-});
+
       this.presentToast('Çıkış Yapıldı.');
 	  
     }
  getUserDetails(){
 this.storage.get('user').then((val) => {
-let username=val.displayName;
-this.userProfile=val;
 
+this.userProfile=val;
+if(this.userProfile.photoURL===null)
+this.userProfile.photoURL="vakifbank.logo.jpg";
   }).catch((error)=>{
 	  this.presentToast('Lütfen giriş yapınız')
-	  this.navCtrl.push(LoginPage);
+	  
 	  
 	  });
 

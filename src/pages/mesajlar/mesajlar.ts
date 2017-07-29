@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams,AlertController } from 'ionic-angular';
 import firebase from 'firebase';
 /**
  * Generated class for the MesajlarPage page.
@@ -13,23 +13,29 @@ import firebase from 'firebase';
   templateUrl: 'mesajlar.html',
 })
 export class MesajlarPage {
+	ref;
+	name;
+	newmessage;
+	messagesList;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-	  this.getMessages();
+  constructor(public navCtrl: NavController, public navParams: NavParams,public alert:AlertController) {
+	 this.ref = firebase.database().ref('messages');
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MesajlarPage');
+
+  	//reading data from firebase
+
+  }
+  send(){
+  	// add new data to firebase
+  	this.ref.push({
+  		name: this.name.username,
+  		message: this.newmessage
+  	});
+
+console.log('ionViewDidLoad MesajlarPage');
   }
   mesaj:any;
-  getMessages(){
-	  let ref=firebase.database().ref('messages');
-	  ref.orderByChild("a_id")
-   .equalTo("f8d2c179zOPiKiu6K2HdfTuDw6E3")
-   .on("child_added", function(snapshot) {
-      console.log(snapshot.val());
-    });
-
-}
-
+  
 }
